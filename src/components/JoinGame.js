@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 export class JoinGame extends Component {
   handleChange = (event) => {
     this.setState({gameName: event.target.value});
-}
+  }
+
   render() {
     return(
     <div>

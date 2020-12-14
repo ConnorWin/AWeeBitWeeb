@@ -5,4 +5,16 @@ function subscribeToTimer(cb) {
     socket.on('timer', timestamp => cb(null, timestamp));
     socket.emit('subscribeToTimer', 1000);
   }
-export { subscribeToTimer }
+
+function createGame (gameName, playerName, handler) {
+  socket.emit('createGame', {gameName, playerName})
+  socket.on('gameLobbyState', response => handler(response))
+}
+function joinGame (gameName, playerName, handler) {
+  socket.emit('joinGame', {gameName, playerName})
+  socket.on('gameLobbyState', response => handler(response))
+}
+function runGame () {}
+function endGame () {}
+
+export { subscribeToTimer, createGame, joinGame }

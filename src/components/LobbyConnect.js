@@ -13,10 +13,12 @@ export class LobbyConnect extends Component {
 
     connectToGame = (gameName) => {
         console.log(`connecting to ${gameName}`)
+        this.props.joinGame(gameName, this.context.userName, this.props.handleLobbyState)
         this.props.readyPlayer(gameName)
     }
     createGame = (gameName) => {
         console.log(`creating ${gameName}`)
+        this.props.createGame(gameName, this.context.userName, this.props.handleLobbyState)
         this.props.readyPlayer(gameName)
     }
 
