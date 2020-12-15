@@ -37,8 +37,9 @@ export class Home extends Component {
   handleLobbyState = (serverResponse) => {
     console.log(`got lobby stats from server ${JSON.stringify(serverResponse)}`)
     this.setState({
-      isCreator: serverResponse.creator === this.userName,
+      isCreator: serverResponse.creator === this.state.userName,
       players: serverResponse.players})
+      console.log(JSON.stringify(this.state))
   }
 
   startGame = () => {

@@ -8,7 +8,6 @@ export class Lobby extends Component {
     //   timestamp 
     // }));
     pingLobby((game) => {
-      console.log(`lobby ping res ${JSON.stringify(game)}`)  
       this.setState({
       players: game.players
     })}, this.props.gameName);

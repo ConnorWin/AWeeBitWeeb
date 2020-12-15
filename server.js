@@ -15,7 +15,7 @@ socket.on('connection', (client) => {
   client.on('createGame', ({gameName, playerName}) =>{
     console.log(`creating game ${gameName} - ${playerName}`)
     let newGame =  new Game(gameName,playerName);
-    if(currentGame != null) {
+    if(!currentGame) {
       currentGame = newGame;
     } else {
       newGame = Error('Game already in progress');
@@ -48,8 +48,8 @@ socket.on('connection', (client) => {
   })
   client.on('lobbyPing', () => {
     let interval = setInterval(() => {
-      client.emit(`gameLobbyState:`, currentGame);
-    }, 1000)
+      client.emit('gameLobbyState', currentGame);
+    }, 2000)
     client.on(`endLobby`, () => {clearInterval(interval)})
   })
 })

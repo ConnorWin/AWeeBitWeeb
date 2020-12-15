@@ -24,8 +24,8 @@ function endTurn() {
 function listenForEndGame(handler) {
   socket.on('endGame', () => handler())
 }
-function pingLobby(handler, gameName) {
-  socket.emit('lobbyPing', gameName);
+function pingLobby(handler) {
+  socket.emit('lobbyPing');
   socket.on('gameLobbyState', response => handler(response));
 }
 
