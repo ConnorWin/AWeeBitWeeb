@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
+import { pingLobby } from '../api';
 export class Lobby extends Component {
 
+  constructor(props) {
+    super(props);
+    // subscribeToTimer((err, timestamp) => this.setState({ 
+    //   timestamp 
+    // }));
+    pingLobby((game) => {
+      console.log(`lobby ping res ${JSON.stringify(game)}`)  
+      this.setState({
+      players: game.players
+    })}, this.props.gameName);
+  }
+
 state = {
-  players: this.props.players
+  players: this.props.players ? this.props.players : []
 }
 
   render() {
@@ -13,6 +26,7 @@ state = {
     <div>
       <h2>Lobby {this.props.gameName}</h2>
       {currentPlayersInLobby}
+      {this.props.isCreator ? <button onClick={() => this.props.startGame()}>Start Game</button> : null}
     </div>
     )
 }

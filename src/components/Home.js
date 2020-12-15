@@ -4,7 +4,8 @@ import AuthContext from '../context/AuthContext';
 import {Authentication} from './Authentication';
 import {LobbyConnect} from './LobbyConnect';
 import {Lobby} from './Lobby';
-import { createGame, joinGame } from '../api';
+import {Game} from './Game';
+import { createGame, joinGame, startGame } from '../api';
 
 export class Home extends Component {
 
@@ -21,7 +22,8 @@ export class Home extends Component {
     timestamp: 'no timestamp yet',
     authenticated: false,
     userName: null,
-    gameName: null
+    gameName: null,
+    gameHasStarted: false
   }
 
   loginHandler = (userName) => {
@@ -34,7 +36,13 @@ export class Home extends Component {
 
   handleLobbyState = (serverResponse) => {
     console.log(`got lobby stats from server ${JSON.stringify(serverResponse)}`)
-    this.setState({players: serverResponse.players})
+    this.setState({
+      isCreator: serverResponse.creator === this.userName,
+      players: serverResponse.players})
+  }
+
+  startGame = () => {
+    this.setState({gameHasStarted: true});
   }
   
   render () {
@@ -50,8 +58,10 @@ export class Home extends Component {
           <LobbyConnect userName={this.state.userName} readyPlayer={this.readyPlayer} joinGame={joinGame} createGame={createGame} handleLobbyState={this.handleLobbyState}/>
           </React.Fragment>):
         <Authentication/>)
-    } else {
-      view = (<Lobby gameName={this.state.gameName} players={this.state.players}/>);
+    } else if (!this.state.gameHasStarted) {
+      view = (<Lobby gameName={this.state.gameName} players={this.state.players} isCreator={this.state.isCreator} startGame={this.startGame}/>);
+      } else {
+        view = (<Lobby />);
       }
 
     return (
