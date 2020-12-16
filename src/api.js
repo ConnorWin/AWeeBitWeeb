@@ -14,19 +14,20 @@ function joinGame (gameName, playerName, handler) {
   socket.emit('joinGame', {gameName, playerName})
   socket.on('gameLobbyState', response => handler(response))
 }
-function startGame (handler) {
+function startGame () {
   socket.emit('startGame');
-  socket.on('starTurn', (response) => handler(response))
 }
+// socket.on('startTurn', (response) => handler(response))
 function endTurn() {
   socket.emit('endTurn');
-}
-function listenForEndGame(handler) {
-  socket.on('endGame', () => handler())
 }
 function pingLobby(handler) {
   socket.emit('lobbyPing');
   socket.on('gameLobbyState', response => handler(response));
 }
+function listenForGameStarting(handler) {
+  socket.on('gameStarting', () => handler());
+}
+function endLobby() {  socket.emit('endLobby');}
 
-export { createGame, joinGame, pingLobby, startGame }
+export { createGame, joinGame, pingLobby, startGame, listenForGameStarting, endLobby }

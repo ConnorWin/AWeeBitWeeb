@@ -28,22 +28,17 @@ socket.on('connection', (client) => {
     client.emit('gameLobbyState', currentGame);
   })
   client.on('startGame', () => {
-    // const {gameIndex, game} = findGame(gameName);
-
-    currentGame.shufflePlayers();
-    currentGame.shuffleDeck()
-    currentGame.currentPlayer = 0;
-
-    client.emit('starTurn', {player: currentGame.players[currentGame.currentPlayer], card: currentGame.deck[currentGame.currentCard]})
-  })
+    currentGame.start();
+    socket.emit('gameStarting');
+    socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], card: currentGame.deck[currentGame.currentCard]})  })
   client.on('endTurn', () => {
     currentGame.currentCard++;
     if(currentGame.currentCard >= currentGame.deck.length) {
-      client.emit('endGame');
+      socket.emit('endGame');
       currentGame = null;
     } else {
       currentGame.currentPlayer = currentGame.currentPlayer >= currentGame.players.length - 1 ? 0 : currentGame.currentPlayer + 1;
-      client.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], card: currentGame.deck[currentGame.currentCard]})
+      socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], card: currentGame.deck[currentGame.currentCard]})
     }
   })
   client.on('lobbyPing', () => {
@@ -65,7 +60,16 @@ class Game {
     this.currentPlayer = -1;
     this.deck = [new Card('TypeA', 'what is it?'), new Card('TypeB', 'how are you?')];
     this.currentCard = 0;
+    this.hasStarted = false;
   }
+
+  start = () => {
+    this.shufflePlayers();
+    this.shuffleDeck()
+    this.currentPlayer = 0;
+    this.hasStarted = true;
+  }
+  
 
   shufflePlayers = () => {
     const plys = this.players;

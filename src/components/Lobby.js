@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { pingLobby } from '../api';
+import { pingLobby, listenForGameStarting, endLobby } from '../api';
 export class Lobby extends Component {
 
   constructor(props) {
@@ -8,9 +8,15 @@ export class Lobby extends Component {
     //   timestamp 
     // }));
     pingLobby((game) => {
+      console.log(JSON.stringify(game))
       this.setState({
       players: game.players
-    })}, this.props.gameName);
+      })
+    });
+    listenForGameStarting(() => 
+    {
+      endLobby();
+      this.props.goToGame()})
   }
 
 state = {
