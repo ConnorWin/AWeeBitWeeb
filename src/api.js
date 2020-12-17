@@ -28,6 +28,9 @@ function pingLobby(handler) {
 function listenForGameStarting(handler) {
   socket.on('gameStarting', () => handler());
 }
+function listenForTurnStarting(handler) {
+  socket.on('startTurn', (response) => handler(response))
+}
 function endLobby() {  socket.emit('endLobby');}
 
-export { createGame, joinGame, pingLobby, startGame, listenForGameStarting, endLobby }
+export { createGame, joinGame, pingLobby, startGame, listenForGameStarting, endLobby, listenForTurnStarting }
