@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {listenForTurnStarting} from '../api'
+import {listenForTurnStarting, endTurn} from '../api'
+import AuthContext from '../context/AuthContext';
 
 export class Game extends Component {
+  static contextType = AuthContext;
   constructor(props) {
     super(props);
     listenForTurnStarting(this.handleTurn)  
@@ -21,6 +23,7 @@ export class Game extends Component {
       <li>{this.state.playerGoing}'s Turn</li>
       <li>{this.state.card?.type}</li>
       <li>{this.state.card?.question}</li>
+      {this.context.userName === this.state.playerGoing ? <button>Pass Turn</button> : null}
     </div>
     )
 }

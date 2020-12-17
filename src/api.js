@@ -33,4 +33,4 @@ function listenForTurnStarting(handler) {
 }
 function endLobby() {  socket.emit('endLobby');}
 
-export { createGame, joinGame, pingLobby, startGame, listenForGameStarting, endLobby, listenForTurnStarting }
+export { createGame, joinGame, pingLobby, startGame, listenForGameStarting, endLobby, listenForTurnStarting, endTurn }
