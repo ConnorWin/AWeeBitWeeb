@@ -1,16 +1,21 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-export class CreateGame extends Component {
-  handleChange = (event) => {
-    this.setState({gameName: event.target.value});
-}
-  render() {
-    return(
-    <div>
-      <p>Create Game</p>
-      <input placeholder='Lobby Name' type="text" onChange={this.handleChange}/>
-      <button onClick={() =>this.props.createGame(this.state.gameName)}>Go</button>
-    </div>
-    )
-}
+export const CreateGame = (props) => {
+  const initialState = {
+    gameName: null
+  }
+
+  const [state, setState] = useState(initialState);
+
+  const handleChange = (event) => {
+      setState({gameName: event.target.value});
+  }
+
+  return (
+  <div>
+    <p>Create Game</p>
+    <input placeholder='Lobby Name' type="text" onChange={handleChange}/>
+    <button onClick={() =>props.createGame(state.gameName)}>Go</button>
+  </div>
+  )
 }
