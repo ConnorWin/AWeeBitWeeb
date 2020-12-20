@@ -1,44 +1,44 @@
-import React, { Component, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import AuthContext from '../context/AuthContext';
 import {JoinGame} from './JoinGame';
 import {CreateGame} from './CreateGame';
 import styles from './Home.module.css';
 
-export class LobbyConnect extends Component {
-    static contextType = AuthContext;
-    state = {
+export const LobbyConnect = (props) => {
+    const { userName } = React.useContext(AuthContext);
+    const initialState = {
         isJoiningGame: false,
         isCreatingGame: false
     }
+    const [state, setState] = useState(initialState)
 
-    connectToGame = (gameName) => {
-        this.props.joinGame(gameName, this.context.userName, this.props.handleLobbyState)
-        this.props.readyPlayer(gameName)
+    const connectToGame = (gameName) => {
+        props.joinGame(gameName, userName, props.handleLobbyState)
+        props.readyPlayer(gameName)
     }
-    createGame = (gameName) => {
-        this.props.createGame(gameName, this.context.userName, this.props.handleLobbyState)
-        this.props.readyPlayer(gameName)
+    const createGame = (gameName) => {
+        props.createGame(gameName, userName, props.handleLobbyState)
+        props.readyPlayer(gameName)
     }
 
-    render () {
-        let lobbyConnect;
-        if (this.state.isJoiningGame) {
-            lobbyConnect = <JoinGame connectToGame={this.connectToGame}/>
-        } else if (this.state.isCreatingGame) {
-            lobbyConnect = <CreateGame createGame={this.createGame}/>
-        } else {
-            lobbyConnect = (
-            <Fragment>
-                <button onClick={() => {this.setState({isJoiningGame: true})}}>Join Game</button>
-                <button onClick={() => {this.setState({isCreatingGame: true})}}>Create Game</button>
-            </Fragment>
-            );
-        }
-        return (
-            <div>
-                <h1 className={styles.Hi}>Hello, {this.props.userName}</h1>
-                {lobbyConnect}
-            </div>
-        )
+    let lobbyConnect;
+    if (state.isJoiningGame) {
+        lobbyConnect = <JoinGame connectToGame={connectToGame}/>
+    } else if (state.isCreatingGame) {
+        lobbyConnect = <CreateGame createGame={createGame}/>
+    } else {
+        lobbyConnect = (
+        <Fragment>
+            <button onClick={() => {setState({isJoiningGame: true})}}>Join Game</button>
+            <button onClick={() => {setState({isCreatingGame: true})}}>Create Game</button>
+        </Fragment>
+        );
     }
+
+    return (
+        <div>
+            <h1 className={styles.Hi}>Hello, {props.userName}</h1>
+            {lobbyConnect}
+        </div>
+    )
 }
