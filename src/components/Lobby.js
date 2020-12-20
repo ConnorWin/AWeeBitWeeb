@@ -4,9 +4,6 @@ export class Lobby extends Component {
 
   constructor(props) {
     super(props);
-    // subscribeToTimer((err, timestamp) => this.setState({ 
-    //   timestamp 
-    // }));
     pingLobby((game) => {
       console.log(JSON.stringify(game))
       this.setState({

@@ -13,9 +13,6 @@ export class Home extends Component {
 
   constructor(props) {
     super(props);
-    // subscribeToTimer((err, timestamp) => this.setState({ 
-    //   timestamp 
-    // }));
   }
 
   state = {
