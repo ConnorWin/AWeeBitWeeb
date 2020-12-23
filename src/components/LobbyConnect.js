@@ -30,6 +30,7 @@ export const LobbyConnect = (props) => {
     lobbyConnect = (
       <Fragment>
         <Button
+        variant="contained" color="primary"
           onClick={() => {
             setState({ isJoiningGame: true });
           }}
@@ -37,6 +38,7 @@ export const LobbyConnect = (props) => {
           Join Game
         </Button>
         <Button
+        variant="contained" color="primary"
           onClick={() => {
             setState({ isCreatingGame: true });
           }}

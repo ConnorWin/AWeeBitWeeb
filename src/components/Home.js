@@ -5,6 +5,7 @@ import { LobbyConnect } from "./LobbyConnect";
 import { Lobby } from "./Lobby";
 import { Game } from "./Game";
 import { createGame, joinGame, startGame } from "../api";
+import { Card } from "@material-ui/core";
 
 export class Home extends Component {
   static contextType = AuthContext;

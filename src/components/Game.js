@@ -33,7 +33,7 @@ export const Game = (props) => {
       <li>{state.card?.type}</li>
       <li>{state.card?.question}</li>
       {userName === state.playerGoing ? (
-        <Button onClick={endTurn}>Pass Turn</Button>
+        <Button variant="contained" color="primary" onClick={endTurn}>Pass Turn</Button>
       ) : null}
     </div>
   );

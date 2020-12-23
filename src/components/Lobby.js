@@ -29,7 +29,7 @@ export class Lobby extends Component {
         <h2>Lobby {this.props.gameName}</h2>
         {currentPlayersInLobby}
         {this.props.isCreator ? (
-          <Button onClick={() => this.props.startGame()}>Start Game</Button>
+          <Button variant="contained" color="primary" onClick={() => this.props.startGame()}>Start Game</Button>
         ) : null}
       </div>
     );

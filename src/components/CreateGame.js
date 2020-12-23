@@ -16,7 +16,7 @@ export const CreateGame = (props) => {
     <div>
       <p>Create Game</p>
       <TextField label="Lobby Name" variant="outlined" onChange={handleChange} />
-      <Button onClick={() => props.createGame(state.gameName)}>Go</Button>
+      <Button variant="contained" color="primary" onClick={() => props.createGame(state.gameName)}>Go</Button>
     </div>
   );
 };
