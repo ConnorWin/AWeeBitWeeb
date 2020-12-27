@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listenForTurnStarting, endTurn, listenForGameEnding } from "../api";
 import AuthContext from "../context/AuthContext";
 import {Button} from '@material-ui/core'
+import theme from '../muiTheme'
 
 export const Game = (props) => {
   const { userName } = React.useContext(AuthContext);
@@ -26,9 +27,9 @@ export const Game = (props) => {
   };
 
   const view = state.isGameOver ? (
-    <p>GG Ya'll</p>
+    <p style={{ color: theme.palette.primary.main }}>GG, Ya'll</p>
   ) : (
-    <div>
+    <div style={{ color: theme.palette.primary.main }}>
       <li>{state.playerGoing}'s Turn</li>
       <li>{state.card?.type}</li>
       <li>{state.card?.question}</li>

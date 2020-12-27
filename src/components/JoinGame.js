@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import {Button, TextField} from '@material-ui/core'
+import {Button} from '@material-ui/core'
+import CustomTextField from './customMaterial/CustomTextField'
+import theme from '../muiTheme'
 
 export const JoinGame = (props) => {
   const initialState = {
@@ -13,9 +15,9 @@ export const JoinGame = (props) => {
 
   return (
     <div>
-      <p>Join Game</p>
-      <TextField label="Lobby Name" variant="outlined" onChange={handleChange} />
-      <Button onClick={() => props.connectToGame(state.gameName)}>Go</Button>
+      <p style={{ color: theme.palette.secondary.main }}>Join Game</p>
+      <CustomTextField label="Lobby Name" variant="outlined" onChange={handleChange} />
+      <Button variant="contained" color="primary" onClick={() => props.connectToGame(state.gameName)}>Go</Button>
     </div>
   );
 };

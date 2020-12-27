@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import {Button, TextField} from '@material-ui/core'
-
+import {Button} from '@material-ui/core'
+import CustomTextField from './customMaterial/CustomTextField'
+import theme from '../muiTheme'
 export const CreateGame = (props) => {
   const initialState = {
     gameName: null,
@@ -14,8 +15,8 @@ export const CreateGame = (props) => {
 
   return (
     <div>
-      <p>Create Game</p>
-      <TextField label="Lobby Name" variant="outlined" onChange={handleChange} />
+      <p style={{ color: theme.palette.secondary.main }}>Create Game</p>
+      <CustomTextField label="Lobby Name" variant="outlined" onChange={handleChange} />
       <Button variant="contained" color="primary" onClick={() => props.createGame(state.gameName)}>Go</Button>
     </div>
   );

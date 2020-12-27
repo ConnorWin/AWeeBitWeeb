@@ -3,6 +3,7 @@ import AuthContext from "../context/AuthContext";
 import { JoinGame } from "./JoinGame";
 import { CreateGame } from "./CreateGame";
 import {Button} from '@material-ui/core'
+import theme from '../muiTheme';
 
 export const LobbyConnect = (props) => {
   const { userName } = React.useContext(AuthContext);
@@ -51,7 +52,7 @@ export const LobbyConnect = (props) => {
 
   return (
     <div>
-      <h1>Hello, {props.userName}</h1>
+      <h1 style={{ color: theme.palette.secondary.main }}>Hello, {props.userName}</h1>
       {lobbyConnect}
     </div>
   );
