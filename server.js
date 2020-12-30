@@ -38,7 +38,7 @@ socket.on('connection', (client) => {
       currentGame = null;
     } else {
       currentGame.currentPlayer = currentGame.currentPlayer >= currentGame.players.length - 1 ? 0 : currentGame.currentPlayer + 1;
-      socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], card: currentGame.deck[currentGame.currentCard]})
+      // socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], card: currentGame.deck[currentGame.currentCard]})
     }
   })
   client.on('lobbyPing', () => {
