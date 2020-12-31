@@ -7,21 +7,13 @@ import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
 
-export const Game = (props) => {
+export const Game = () => {
   const { userName } = React.useContext(AuthContext);
 
   useEffect(() => {
     listenForTurnStarting(handleTurn);
     listenForGameEnding(handleGameEnd);
   });
-
-  // const initialState = {
-  //   playerGoing: null,
-  //   card: null,
-  //   isGameOver: false,
-  //   flip: true
-  // };
-  // const [state, setState] = useState(initialState);
 
   const [playerGoing, setPlayerGoing] = useState(null);
   const [card, setCard] = useState(null);

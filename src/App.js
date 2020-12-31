@@ -4,7 +4,6 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import theme from './muiTheme';
 import { ThemeProvider } from '@material-ui/core';
-
 export default class App extends Component {
   render() {
     return (
