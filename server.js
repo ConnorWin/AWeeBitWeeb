@@ -58,7 +58,7 @@ class Game {
     this.players = [creator];
     this.name = name;
     this.currentPlayer = -1;
-    this.deck = [new Card('TypeA', 'what is it?'), new Card('TypeB', 'how are you?')];
+    this.deck = [new Card('TypeA', 'what is it?', 'QA','https://pm1.narvii.com/6297/150f8170e5f1637c7deed1dc6bd39f2a038a4b0c_00.jpg'), new Card('TypeB', 'how are you?', 'QB','')];
     this.currentCard = 0;
     this.hasStarted = false;
   }
@@ -91,8 +91,10 @@ class Game {
 }
 
 class Card{
-  constructor( type, question){
+  constructor(type, question, name, image){
     this.type = type;
     this.question = question;
+    this.name = name;
+    this.image = image;
   }
 }
