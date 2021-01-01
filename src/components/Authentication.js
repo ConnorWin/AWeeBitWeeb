@@ -78,7 +78,8 @@ export const Authentication = () => {
       'box-shadow': '-8px -8px 8px rgba(255, 255, 255, 1), -8px -8px 8px rgba(255, 255, 255, .5), inset 2px 2px 4px rgba(255, 255, 255, .1), 5px 5px 10px rgba(0, 0, 0, .15)'
     },
     level: {
-      'margin-top': '15px',
+      'margin-top': '5px',
+      'margin-bottom': '5px',
       width: '310px',
       display: 'flex',
       'flex-direction': 'row',
@@ -87,10 +88,9 @@ export const Authentication = () => {
     },
     levelStar: {
       width: '25px',
-      padding: '3px',
       'border-radius': '50%',
       'box-shadow': '-2px -2px 5px rgba(255, 255, 255, 1), -2px -2px 5px rgba(255, 255, 255, .5), inset 2px 2px 4px rgba(255, 255, 255, .1), 2px 2px 8px rgba(0, 0, 0, .15)',
-      'margin': '0 5px 5px 0'
+      'margin': '0 5px 0 0'
     },
     monsterImageContainer: {
       width: '290px',
