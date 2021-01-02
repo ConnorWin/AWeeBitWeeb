@@ -3,6 +3,7 @@ import AuthContext from "../context/AuthContext";
 import {Button} from '@material-ui/core'
 import CustomTextField from './customMaterial/CustomTextField'
 import theme from '../muiTheme';
+import { Instructions } from "./Instructions";
 
 export const Authentication = () => {
   const { login } = React.useContext(AuthContext);
@@ -43,7 +44,6 @@ export const Authentication = () => {
       <Button variant="contained" color="primary" onClick={setUserName}>Go</Button>
     </div>
   );
-//*** */
 
   return (
     <div>

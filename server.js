@@ -68,7 +68,7 @@ class Game {
     this.players = [creator];
     this.name = name;
     this.currentPlayer = -1;
-    this.deck = [new Card('TypeA', "What is Luffy's middle intial? Drink 4 if you don't know.", 'QA','https://pm1.narvii.com/6297/150f8170e5f1637c7deed1dc6bd39f2a038a4b0c_00.jpg'), new Card('TypeB', 'Most likely to dye their heir an anime color? Most voted drinks 9.', 'QB','')];
+    this.deck = [new Card(CardTypes.TRIVIA, "What is Luffy's middle intial? Drink 4 if you don't know.", 'QA','https://pm1.narvii.com/6297/150f8170e5f1637c7deed1dc6bd39f2a038a4b0c_00.jpg'), new Card(CardTypes.IFTHISTHEN, 'Most likely to dye their heir an anime color? Most voted drinks 9.', 'QB','')];
     this.currentCard = 0;
     this.hasStarted = false;
   }
@@ -107,4 +107,14 @@ class Card{
     this.name = name;
     this.image = image;
   }
+}
+
+const CardTypes ={
+  SPILLORDRINK: 'Spill or Drink',
+  DAREORDRINK: 'Dare or Drink',
+  MOSTLIKELYTO: 'Most Likely To',
+  CATEGORIES: 'Categories',
+  IFTHISTHEN: 'If this, then',
+  WOULDYOURATHER: 'Would You Rather',
+  TRIVIA: 'Trivia'
 }

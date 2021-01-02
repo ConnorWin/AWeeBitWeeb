@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
 import {star, blueEyes} from '../static'
+import {Instructions} from './Instructions';
 
 export const Game = (props) => {
   const { userName } = React.useContext(AuthContext);
@@ -148,6 +149,7 @@ export const Game = (props) => {
 <div>
   <p style={{ color: theme.palette.primary.main }}>Game Instance: {props.name}</p>
   <p style={{ color: theme.palette.primary.main }}>{playerGoing}'s Turn</p>
+  <Instructions/>
   <p style={{ color: theme.palette.primary.main }}>Cards Remaining: {currentDeckCount}/{totalDeckCount}</p>
   {userName === playerGoing ? (
           <Button variant="contained" color="primary" onClick={passTurn}>Pass Turn</Button>
@@ -163,13 +165,6 @@ export const Game = (props) => {
             {card?.name}
           </div>
           <div className={classes.level}>
-            {/* <img className={classes.levelStar} src={star}/>
-            <img className={classes.levelStar} src={star}/>
-            <img className={classes.levelStar} src={star}/>
-            <img className={classes.levelStar} src={star}/>
-            <img className={classes.levelStar} src={star}/>
-            <img className={classes.levelStar} src={star}/>
-            <img className={classes.levelStar} src={star}/> */}
             {stars}
           </div>
           <div className={classes.monsterImage}>

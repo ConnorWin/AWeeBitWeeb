@@ -18,6 +18,15 @@ const theme = createMuiTheme({
       main: '#003287',
     },
   },
+  cardTypes: {
+    orange: '#c67b42',
+    purple: '#5e4962',
+    yellow: '#a37c38',
+    blue: '#6f8fbc',
+    green: '#31878e',
+    white: '#dad5c9',
+    fuchsia: '#a63b77',
+  },
 });
 
 export { theme as default };
