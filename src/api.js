@@ -31,6 +31,9 @@ function listenForGameEnding(handler) {
 function endLobby() {
   socket.emit('endLobby');
 }
+function killGame() {
+  socket.emit('killGame');
+}
 
 export {
   createGame,
@@ -42,4 +45,5 @@ export {
   listenForTurnStarting,
   endTurn,
   listenForGameEnding,
+  killGame,
 };

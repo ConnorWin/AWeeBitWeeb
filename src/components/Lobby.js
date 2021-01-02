@@ -6,7 +6,6 @@ export class Lobby extends Component {
   constructor(props) {
     super(props);
     pingLobby((game) => {
-      console.log(JSON.stringify(game));
       this.setState({
         players: game.players,
       });

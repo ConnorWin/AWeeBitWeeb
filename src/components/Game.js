@@ -8,7 +8,7 @@ import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
 import {star, blueEyes} from '../static'
 
-export const Game = () => {
+export const Game = (props) => {
   const { userName } = React.useContext(AuthContext);
 
   useEffect(() => {
@@ -20,11 +20,24 @@ export const Game = () => {
   const [card, setCard] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
   const [flip, setFlip] = useState(true);
+  const [currentDeckCount, setCurrentDeckCount] = useState(0);
+  const [totalDeckCount, setTotalDeckCount] = useState(0);
+  const [starCount, setStarCount] = useState(0);
 
-  const handleTurn = ({ player, card }) => {
+  const handleTurn = ({ player, newCard, cardsRemaining, totalCards }) => {
+    console.log(JSON.stringify(newCard))
     setPlayerGoing(player);
-    setCard(card);
+    setCard(newCard);
+    setCurrentDeckCount(cardsRemaining);
+    setTotalDeckCount(totalCards);
+    setStarCount(parseStarCountFromDescription(newCard.question))
   };
+  const parseStarCountFromDescription = (cardText = '') => {
+    const result = cardText.match(/\d+/g)
+    console.log(JSON.stringify(result))
+    return !!result ? Number.parseInt(result[0]) : 0;
+  }
+
   const handleGameEnd = () => {
     setIsGameOver(true);
   };
@@ -124,14 +137,23 @@ export const Game = () => {
 
   const classes = useStyles();
 
+  let stars = [];
+  for (let i = 0; i < starCount; i++) {
+    stars.push(<img key={i} className={classes.levelStar} src={star}/>)
+  }
+
   const view = isGameOver ? (
     <p style={{ color: theme.palette.primary.main }}>GG, Ya'll</p>
   ) : (
 <div>
+  <p style={{ color: theme.palette.primary.main }}>Game Instance: {props.name}</p>
   <p style={{ color: theme.palette.primary.main }}>{playerGoing}'s Turn</p>
+  <p style={{ color: theme.palette.primary.main }}>Cards Remaining: {currentDeckCount}/{totalDeckCount}</p>
   {userName === playerGoing ? (
           <Button variant="contained" color="primary" onClick={passTurn}>Pass Turn</Button>
         ) : null}
+  <br/>
+  <br/>
   <Slide direction="up" in={flip} mountOnEnter unmountOnExit style={{ color: theme.palette.primary.main }}>
     <Paper elevation={4} className={classes.paper}>
             {/* rip out */}
@@ -141,13 +163,14 @@ export const Game = () => {
             {card?.name}
           </div>
           <div className={classes.level}>
+            {/* <img className={classes.levelStar} src={star}/>
             <img className={classes.levelStar} src={star}/>
             <img className={classes.levelStar} src={star}/>
             <img className={classes.levelStar} src={star}/>
             <img className={classes.levelStar} src={star}/>
             <img className={classes.levelStar} src={star}/>
-            <img className={classes.levelStar} src={star}/>
-            <img className={classes.levelStar} src={star}/>
+            <img className={classes.levelStar} src={star}/> */}
+            {stars}
           </div>
           <div className={classes.monsterImage}>
             <img className={classes.monsterImage} src={card?.image}/>

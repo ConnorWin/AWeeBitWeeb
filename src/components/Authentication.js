@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthContext from "../context/AuthContext";
 import {Button} from '@material-ui/core'
 import CustomTextField from './customMaterial/CustomTextField'
+import theme from '../muiTheme';
 
 export const Authentication = () => {
   const { login } = React.useContext(AuthContext);
@@ -31,6 +32,9 @@ export const Authentication = () => {
   ) : null;
   let loginView = (
     <div>
+                  <h2 style={{ color: theme.palette.secondary.main }}>
+              A Wee Bit Weeb
+            </h2>
       <CustomTextField
         label="User Name"
         onChange={handleChange}

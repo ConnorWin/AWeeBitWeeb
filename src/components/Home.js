@@ -68,7 +68,7 @@ export class Home extends Component {
         />
       );
     } else {
-      view = <Game />;
+      view = <Game name={this.state.gameName}/>;
     }
 
     return (

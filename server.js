@@ -30,7 +30,8 @@ socket.on('connection', (client) => {
   client.on('startGame', () => {
     currentGame.start();
     socket.emit('gameStarting');
-    socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], card: currentGame.deck[currentGame.currentCard]})  })
+    socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], newCard: currentGame.deck[currentGame.currentCard], cardsRemaining: currentGame.deck.length - (currentGame.currentCard + 1), totalCards: currentGame.deck.length })
+  })
   client.on('endTurn', () => {
     currentGame.currentCard++;
     if(currentGame.currentCard >= currentGame.deck.length) {
@@ -38,14 +39,23 @@ socket.on('connection', (client) => {
       currentGame = null;
     } else {
       currentGame.currentPlayer = currentGame.currentPlayer >= currentGame.players.length - 1 ? 0 : currentGame.currentPlayer + 1;
-      // socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], card: currentGame.deck[currentGame.currentCard]})
+      socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], newCard: currentGame.deck[currentGame.currentCard], cardsRemaining: currentGame.deck.length - (currentGame.currentCard + 1), totalCards: currentGame.deck.length})
     }
   })
   client.on('lobbyPing', () => {
-    let interval = setInterval(() => {
-      client.emit('gameLobbyState', currentGame);
-    }, 2000)
-    client.on(`endLobby`, () => {clearInterval(interval)})
+    if(currentGame.hasStarted){
+      socket.emit('gameStarting');
+      socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], newCard: currentGame.deck[currentGame.currentCard], cardsRemaining: currentGame.deck.length - (currentGame.currentCard + 1), totalCards: currentGame.deck.length })
+    } else {
+      let interval = setInterval(() => {
+        client.emit('gameLobbyState', currentGame);
+      }, 2000)
+      client.on(`endLobby`, () => {clearInterval(interval)})
+    }
+  })
+  client.on('killGame', () => {
+    socket.emit('endGame');
+    currentGame = null;
   })
 })
 
@@ -58,7 +68,7 @@ class Game {
     this.players = [creator];
     this.name = name;
     this.currentPlayer = -1;
-    this.deck = [new Card('TypeA', 'what is it?', 'QA','https://pm1.narvii.com/6297/150f8170e5f1637c7deed1dc6bd39f2a038a4b0c_00.jpg'), new Card('TypeB', 'how are you?', 'QB','')];
+    this.deck = [new Card('TypeA', "What is Luffy's middle intial? Drink 4 if you don't know.", 'QA','https://pm1.narvii.com/6297/150f8170e5f1637c7deed1dc6bd39f2a038a4b0c_00.jpg'), new Card('TypeB', 'Most likely to dye their heir an anime color? Most voted drinks 9.', 'QB','')];
     this.currentCard = 0;
     this.hasStarted = false;
   }
