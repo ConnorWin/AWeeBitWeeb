@@ -57,6 +57,9 @@ socket.on('connection', (client) => {
     socket.emit('endGame');
     currentGame = null;
   })
+  client.on('vote', (choice) => {
+    
+  })
 })
 
 socket.listen(8000);
@@ -71,6 +74,7 @@ class Game {
     this.deck = [new Card(CardTypes.TRIVIA, "What is Luffy's middle intial? Drink 4 if you don't know.", 'QA','https://pm1.narvii.com/6297/150f8170e5f1637c7deed1dc6bd39f2a038a4b0c_00.jpg'), new Card(CardTypes.IFTHISTHEN, 'Most likely to dye their heir an anime color? Most voted drinks 9.', 'QB','')];
     this.currentCard = 0;
     this.hasStarted = false;
+    this.voting = {}
   }
 
   start = () => {

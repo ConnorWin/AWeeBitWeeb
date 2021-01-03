@@ -34,6 +34,9 @@ function endLobby() {
 function killGame() {
   socket.emit('killGame');
 }
+function vote(choice) {
+  socket.emit('vote', { choice });
+}
 
 export {
   createGame,
