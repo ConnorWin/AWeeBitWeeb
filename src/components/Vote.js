@@ -1,20 +1,20 @@
-import React, { Fragment, useState } from "react";
-import {Button} from '@material-ui/core'
-import {vote} from '../api'
-export const Vote = ({choices}) => {
+import React, { useState } from "react";
+import {Button, ButtonGroup} from '@material-ui/core'
+import theme from '../muiTheme'
+import {vote} from '../api';
 
-    const handleVote = (choice) => {
-        vote(choice)
+export const Vote = ({votingOptions}) => {
+
+    const handleChange = (event) => {
+        vote(event.target.value)
     }
-
-    const view = [...choices].map((choice) => 
-    <Button onClick={handleVote} value={choice}>
-        {choice}
-    </Button>)
-
     return (
-        <Fragment>
-            {view}
-        </Fragment>
+        <>
+            <ButtonGroup onChange={handleChange}>
+            {
+                votingOptions.map(option => <Button value={option} variant="contained" color="secondary">{option}</Button>)
+            }
+            </ButtonGroup>
+        </>
     );
 };

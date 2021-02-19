@@ -7,6 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
 import {Instructions} from './Instructions';
 import {Card} from './Card';
+import { Vote } from "./Vote";
+import { CardTypes } from "../models/Card";
 
 export const Game = (props) => {
   const { userName } = React.useContext(AuthContext);
@@ -64,6 +66,7 @@ export const Game = (props) => {
         ) : null}
   <br/>
   <br/>
+  { card?.type === CardTypes.MOSTLIKELYTO || card?.type === CardTypes.WOULDYOURATHER ?   <Vote votingOptions={card.votingOptions}/> : null}
   <Slide direction="up" in={flip} mountOnEnter unmountOnExit style={{ color: theme.palette.primary.main }}>
     <Paper elevation={4} style={{zIndex: 1, width: '390px'}}>
       <Card card={card} starCount={starCount}/>

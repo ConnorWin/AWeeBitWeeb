@@ -49,4 +49,5 @@ export {
   endTurn,
   listenForGameEnding,
   killGame,
+  vote,
 };

@@ -11,6 +11,14 @@ const socket = Socketio( {
 
 let currentGame = null;
 
+const setCardVotingOptions = (game, card) => {
+  let newCard = card;
+  if(card.type === CardTypes.MOSTLIKELYTO) {
+    newCard.votingOptions = game.players;
+  }
+  return newCard;
+}
+
 socket.on('connection', (client) => {
   client.on('createGame', ({gameName, playerName}) =>{
     console.log(`creating game ${gameName} - ${playerName}`)
@@ -30,7 +38,7 @@ socket.on('connection', (client) => {
   client.on('startGame', () => {
     currentGame.start();
     socket.emit('gameStarting');
-    socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], newCard: currentGame.deck[currentGame.currentCard], cardsRemaining: currentGame.deck.length - (currentGame.currentCard + 1), totalCards: currentGame.deck.length })
+    socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], newCard: setCardVotingOptions(currentGame, currentGame.deck[currentGame.currentCard]), cardsRemaining: currentGame.deck.length - (currentGame.currentCard + 1), totalCards: currentGame.deck.length })
   })
   client.on('endTurn', () => {
     currentGame.currentCard++;
@@ -39,13 +47,13 @@ socket.on('connection', (client) => {
       currentGame = null;
     } else {
       currentGame.currentPlayer = currentGame.currentPlayer >= currentGame.players.length - 1 ? 0 : currentGame.currentPlayer + 1;
-      socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], newCard: currentGame.deck[currentGame.currentCard], cardsRemaining: currentGame.deck.length - (currentGame.currentCard + 1), totalCards: currentGame.deck.length})
+      socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], newCard: setCardVotingOptions(currentGame, currentGame.deck[currentGame.currentCard]), cardsRemaining: currentGame.deck.length - (currentGame.currentCard + 1), totalCards: currentGame.deck.length})
     }
   })
   client.on('lobbyPing', () => {
     if(currentGame.hasStarted){
       socket.emit('gameStarting');
-      socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], newCard: currentGame.deck[currentGame.currentCard], cardsRemaining: currentGame.deck.length - (currentGame.currentCard + 1), totalCards: currentGame.deck.length })
+      socket.emit('startTurn', {player: currentGame.players[currentGame.currentPlayer], newCard: setCardVotingOptions(currentGame, currentGame.deck[currentGame.currentCard]), cardsRemaining: currentGame.deck.length - (currentGame.currentCard + 1), totalCards: currentGame.deck.length })
     } else {
       let interval = setInterval(() => {
         client.emit('gameLobbyState', currentGame);
@@ -58,7 +66,7 @@ socket.on('connection', (client) => {
     currentGame = null;
   })
   client.on('vote', (choice) => {
-    
+    //tally votes here
   })
 })
 
@@ -71,7 +79,7 @@ class Game {
     this.players = [creator];
     this.name = name;
     this.currentPlayer = -1;
-    this.deck = [new Card(CardTypes.TRIVIA, "What is Luffy's middle intial? Drink 4 if you don't know.", 'QA','https://pm1.narvii.com/6297/150f8170e5f1637c7deed1dc6bd39f2a038a4b0c_00.jpg'), new Card(CardTypes.IFTHISTHEN, 'Most likely to dye their heir an anime color? Most voted drinks 9.', 'QB','')];
+    this.deck = [new Card(CardTypes.WOULDYOURATHER, "What is Luffy's middle intial? Drink 4 if you don't know.", 'QA','https://pm1.narvii.com/6297/150f8170e5f1637c7deed1dc6bd39f2a038a4b0c_00.jpg', ['do somthing', 'another option']), new Card(CardTypes.MOSTLIKELYTO, 'Most likely to dye their heir an anime color? Most voted drinks 9.', 'QB','')];
     this.currentCard = 0;
     this.hasStarted = false;
     this.voting = {}
@@ -105,11 +113,12 @@ class Game {
 }
 
 class Card{
-  constructor(type, question, name, image){
+  constructor(type, question, name, image, votingOptions = []){
     this.type = type;
     this.question = question;
     this.name = name;
     this.image = image;
+    this.votingOptions = votingOptions;
   }
 }
 
