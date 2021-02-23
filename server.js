@@ -11,11 +11,12 @@ const socket = Socketio( {
 
 let currentGame = null;
 
-const setCardVotingOptions = (game, card) => {
+function setCardVotingOptions(game, card) {
   let newCard = card;
   if(card.type === CardTypes.MOSTLIKELYTO) {
     newCard.votingOptions = game.players;
   }
+  currentGame.voteTally = [];
   return newCard;
 }
 
@@ -66,7 +67,23 @@ socket.on('connection', (client) => {
     currentGame = null;
   })
   client.on('vote', (choice) => {
-    //tally votes here
+    if(!!currentGame.voteTally.find(ballot => ballot.name === choice)) {
+      currentGame.voteTally = currentGame.voteTally.map(ballot => ballot.name === choice ? {...ballot, count: ballot.count += 1} : ballot)
+    } else {
+      currentGame.voteTally.push(new Ballot(choice, 1));
+    }
+    if(currentGame.voteTally.reduce((totalVotes, ballot) => ballot.count + totalVotes) >= currentGame.players.length) {
+      let result = [];
+      currentGame.voteTally.forEach((ballot) => {
+        if(result.length == 0 || ballot.count > result[0].count) {
+          result = [ballot];
+        } else if(ballot.count === result[0].count) {
+          result.push(ballot)
+        }
+      })
+      socket.emit('endVoting', result.map((ballot) => ballot.name))
+    }
+    console.log(currentGame.voteTally)
   })
 })
 
@@ -83,6 +100,7 @@ class Game {
     this.currentCard = 0;
     this.hasStarted = false;
     this.voting = {}
+    this.voteTally = [];
   }
 
   start = () => {
@@ -109,6 +127,13 @@ class Game {
         [dek[i], dek[j]] = [dek[j], dek[i]];
     }
     this.deck = dek;
+  }
+}
+
+class Ballot {
+  constructor(name='', count= 0){
+    this.name = name;
+    this.count = count;
   }
 }
 
